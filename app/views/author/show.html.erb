@@ -12,15 +12,17 @@
   </div>
   
   <div class="card-body">
-    <img src="http://parkipourlavie.com/wp-content/uploads/2014/03/grinning_happy_dog.jpg" class="rounded float-left rounded" height="220">
+    <img src="https://i.pinimg.com/originals/78/68/64/78686447ce595bf7ff825e5a0455ae88.jpg" class="rounded float-left rounded" height="220" style="margin:10px">
     <h5 class="card-title font-weight-bold"><%= User.find(params[:id]).first_name%> <%= User.find(params[:id]).last_name%></h5>
       <div class="card-text">
         <p>Description : <%= User.find(params[:id]).description%></p>
       	<p>Email : <%= User.find(params[:id]).email%></p>
       	<p>Age : <%= User.find(params[:id]).age%></p>
-    		<p>Adresse (ville & zip_code) : <%= User.find(params[:id]).city.name%> <%= User.find(params[:id]).city.zip_code%></p>
+    		<p>Adresse (ville & zip_code) : <%= User.find(params[:id]).city.name%> <%= User.find(params[:id]).city.zip_code%>. 
+          En savoir plus sur cette ville: <a class="btn btn-info" <%= link_to "Clique ici", city_path(@city.id)%></a></p>
     		<p>Membre depuis le : <%= User.find(params[:id]).created_at.to_date%></p>
       </div>
+  </div>
   </div>
 </div>
 
@@ -31,30 +33,31 @@
     <% else %>
     <p><%= User.find(params[:id]).first_name%> a écrit le(s) <%=Gossip.where(user_id:params[:id]).size%> gossip(s) suivant(s) :</p>
     <%end%>
-   </div>
+</div>
+
 <div class="card-deck">
 <%Gossip.where(user_id:params[:id]).each do |gossip|%>
-<div class="col-sm-4 mb-3">
-<div class="card">
-  <div class="card-header">
-    Gossip #<%=gossip.id%>
+  <div class="col-sm-4 mb-3">
+  <div class="card">
+    <div class="card-header">
+      Gossip #<%=gossip.id%>
+    </div>
+    <div class="card-body align-center">
+      <blockquote class="blockquote mb-0">
+        <p><%=gossip.title%></p>
+        <footer class="blockquote-footer">
+        <div class="row justify-content-between align-self-center mx-3">
+        	<p><%=User.find(gossip.user_id).first_name%> <%=User.find(gossip.user_id).last_name%></p>
+        	<a class="btn btn-info" <%= link_to "Voir", gossip_path(gossip.id)%></a>
+        </div>
+        </footer>
+      </blockquote>
+    </div>
   </div>
-  <div class="card-body align-center">
-    <blockquote class="blockquote mb-0">
-      <p><%=gossip.title%></p>
-      <footer class="blockquote-footer">
-      <div class="row justify-content-between align-self-center mx-3">
-      	<p><%=User.find(gossip.user_id).first_name%> <%=User.find(gossip.user_id).last_name%></p>
-      	<a class="btn btn-info" <%= link_to "Voir", gossip_path(gossip.id)%></a>
-      </div>
-      </footer>
-    </blockquote>
   </div>
-</div>
-</div>
 <%end%>
 </div>
-</div>
+
 
 </body>
 </html>

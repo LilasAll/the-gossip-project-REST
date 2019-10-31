@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  resources :gossip, except: [:destroy] 
+  get 'comments/show'
+  resources :city
+  resources :gossip 
   resources :author
   resources :welcome, only: [:index, :show]
   resources :contact, only: [:index]
   resources :team, only: [:index]
+  resources :comment
 end

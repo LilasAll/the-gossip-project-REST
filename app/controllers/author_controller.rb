@@ -1,12 +1,16 @@
 class AuthorController < ApplicationController
-    def new
+  def new
   	Gossip.new
   end
+
   def create
   	Gossip.create
+    @city = City.find(params[:id])
   end
 
   def show
+
+    @city = City.find(params[:id])
   end
 
   def index
